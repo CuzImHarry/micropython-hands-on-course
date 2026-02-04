@@ -42,28 +42,74 @@ As mentioned above, please regularly push your changes to your forked repository
 
 For the final presentation, please prepare a short presentation (max. 10 minutes, followed by 5 minutes Q&A) summarizing your project, results, and learnings. The presentations will be held during the last session of the course on 23.02.2026.
 
-## Ressources
+## Resources
 
 ### Onboarding Material
 * [Prerequisites](./prerequisites.pdf)
-* [MicroPython Introduction](TODO)
+* [Installation instructions](https://ifx-micropython.readthedocs.io/en/latest/psoc6/installation.html)
+* [MicroPython Introduction](./micropython-ai-edge-wshop-tuw_2026-02-09.pdf)
 * [Code Examples](./examples/)
 
+### Hardware Product Pages and Docs
+
+#### Infineon CY8CKIT-062S2-AI Board
+
+* [PSOC™ 6 CY8CKIT-062S2-AI Board manual](https://www.infineon.com/assets/row/public/documents/30/44/infineon-cy8ckit-062s2-user-guide-usermanual-en.pdf)
+* [PSOC™ 6 CY8CKIT-062S2-AI Board Product Page](https://www.infineon.com/assets/row/public/documents/30/44/infineon-cy8ckit-062s2-user-guide-usermanual-en.pdf)
+* [CY8C624ABZI-S2D44 Datasheet](https://www.infineon.com/assets/row/public/documents/30/49/infineon-psoc-6-mcu-cy8c62x8-cy8c62xa-datasheet-datasheet-en.pdf)
+* [CYW43439 Wi-Fi® + Bluetooth® Module](https://www.murata.com/products/connectivitymodule/wi-fi-bluetooth/overview/lineup/type1yn)
+
+#### On-Board Peripherals
+
+* [Inertial Measurement Unit (IMU) BMI270](https://www.bosch-sensortec.com/products/motion-sensors/imus/bmi270/)
+* [Magnetometer BMM350](https://www.bosch-sensortec.com/products/motion-sensors/magnetometers/bmm350/)
+* [Barometric Pressure Sensor DPS368](https://www.infineon.com/part/DPS368)
+* [60 GHz Radar Sensor BGT60TR13C](https://www.infineon.com/part/BGT60TR13C)
+* [MEMS Digital Microphone IM69D130](https://www.infineon.com/part/IM69D130)
+
+
 ### Related Repositories
-* [MicroPython PSOC™ 6 fork](https://github.com/Infineon/micropython)
+
+* [MicroPython PSOC™ 6 Fork](https://github.com/Infineon/micropython)
 * [MicroPython Radar Sensor Driver](https://github.com/Infineon/micropython-radar-bgt60)
-* [MicroPython Pressure Sensor Driver](TODO)
+* [MicroPython Pressure Sensor Driver](https://github.com/Infineon/micropython-xensiv-dps3xx)
 * [MicroPython IMU Driver](https://github.com/ederjc/micropython_bmi270)
 * [DEEPCRAFT™ MicroPython Model Converter](https://github.com/Infineon/deepcraft-micropython-converter)
+* [Official MicroPython Libraries](https://github.com/micropython/micropython-lib)
 
-### Related Hackster.io Articles
+
+### MicroPython Docs
+
+* [MicroPython Official Site](https://www.micropython.org/)
+* [MicroPython PSOC6 Documentation](https://ifx-micropython.readthedocs.io/en/latest/)
+ 
+
+### Forums and Support
+
+* [MicroPython Discord](https://micropython.org/discord)
+* [MicroPython Infineon GitHub Issues](https://github.com/Infineon/micropython/issues)
+* [MicroPython Infineon GitHub Discussions](https://github.com/Infineon/micropython/discussions)
+* [MicroPython Official GitHub Issues](https://github.com/micropython/micropython/issues)
+* [MicroPython Official GitHub Discussions](https://github.com/micropython/micropython/discussions)
+
+### Community Projects
+
+* [Hackster.io](https://www.hackster.io/)
+* [Hackster.io Infineon Team](https://www.hackster.io/Infineon_Team)
+  
+
+#### Related Hackster.io Articles
+
 * [Protip on PDM Microphones](https://www.hackster.io/Infineon_Team/silence-meet-signal-a-beginner-s-guide-to-pdm-microphones-dd4667)
 * [Protip on Radar Sensor](https://www.hackster.io/537973/explore-the-environment-using-bgt60-radar-and-micropython-c67d6e)
 * [Protip on Accelerometer & Gyroscope](https://www.hackster.io/Infineon_Team/accelerometer-gyroscope-with-psoc-6-and-micropython-757eb3)
+* [Integration of DEEPCRAFT™ model into MicroPython](https://www.hackster.io/Infineon_Team/edge-ai-made-easy-with-deepcraft-micropython-part-ii-fa5edf)
 
-### Documentation
-* [MicroPython PSOC™ 6 fork docs](https://ifx-micropython.readthedocs.io/en/latest/psoc6/general.html)
-* [PSOC™ 6 AI Kit](https://www.infineon.com/evaluation-board/CY8CKIT-062S2-AI)
+### Tools
+
+* [Python](https://www.python.org/)
+* [Pip](https://pip.pypa.io/en/stable/)
+* [Thonny](https://thonny.org/)
 * [DEEPCRAFT™ Studio docs](https://developer.imagimob.com/)
 
 ## Infineon Team
