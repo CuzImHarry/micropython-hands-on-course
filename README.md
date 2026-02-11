@@ -30,11 +30,11 @@ Please actively use git commits to document your progress and regularly push you
 | MicroPython Hands-on Introduction       | 09.02.2026 | 10:00 | **On-site** |
 | DEEPCRAFT™ Studio Hands-on Introduction | 10.02.2026 | 09:00 | **On-site** |
 | **Presentation of Project Ideas**       | 10.02.2026 | 09:00 | **On-site** |
-| **Mandatory** Check-in & Q&A Session    | 13.02.2026 | 16:00 | Online      |
+| **Mandatory** Check-in & Q&A Session    | 13.02.2026 | 15:00 | Online      |
 | **Mandatory** Check-in & Q&A Session    | 17.02.2026 | 16:00 | Online      |
 | **Mandatory** Check-in & Q&A Session    | 19.02.2026 | 16:00 | Online      |
 | **Final Submission**                    | 22.02.2026 | 23:59 | Online      |
-| **Final Presentations**                 | 24.02.2026 | 10:00 | **On-site** |
+| **Final Presentations**                 | 23.02.2026 | 13:00 | **On-site** |
 
 Please note that attendance is **mandatory** for all team members in order to successfully complete the course.
 
@@ -50,7 +50,7 @@ Use the project folder to track your DEEPCRAFT™ Studio workspace, your MicroPy
 Please prepare a written report summarizing your project idea, approach, results, and steps to reproduce your work. The report can contain code snippets, figures, and references to your code. It can be in PDF or Markdown format. Submission deadline: **22.02.2026 23:59**.
 
 #### Presentation
-For the final presentation, please prepare a short presentation (max. 10 minutes, followed by 5 minutes Q&A) summarizing your project, results, and learnings. The presentations will be held during the last session of the course on **24.02.2026**. Submission deadline: **23.02.2026 23:59**.
+For the final presentation, please prepare a short presentation (max. 10 minutes, followed by 5 minutes Q&A) summarizing your project, results, and learnings. The presentations will be held during the last session of the course on **23.02.2026**. Submission deadline: **23.02.2026 12:00**.
 
 ## Resources
 
