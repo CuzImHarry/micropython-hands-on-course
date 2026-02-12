@@ -1,25 +1,122 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ImagimobStudio>
-  <ProjectId>dfaec934-3d93-4903-b017-011e08110e0f</ProjectId>
+<ImagimobStudio version="1.1.0">
   <Job id="35da1f89-04e5-44a7-ab32-46d1f0cb92d5" />
   <ProjectType>Classification</ProjectType>
+  <ProjectId>dfaec934-3d93-4903-b017-011e08110e0f</ProjectId>
+  <Preprocessor inshape="[1,128,1]" intype="Float32" infreq="200" outshape="[100,128]" outtype="Float32">
+    <Unit id="Core.Packages.ContextualWindow">
+      <Argument param="contextual_length_sec" type="Double">0.5</Argument>
+      <Argument param="prediction_freq" type="Double">10</Argument>
+      <Argument param="input" type="String">data</Argument>
+      <Argument param="time_input" type="String">time</Argument>
+      <Argument param="output" type="String">data</Argument>
+      <Argument param="time_output" type="String">time</Argument>
+    </Unit>
+  </Preprocessor>
   <ModelFactory>
     <Epochs>100</Epochs>
-    <BatchSize>128</BatchSize>
+    <BatchSize>16</BatchSize>
+    <SplitCount>16</SplitCount>
+    <Patience>20</Patience>
+    <AppendModels>True</AppendModels>
+    <LossFunction>CategoricalCrossentropy</LossFunction>
+    <HardwareType>Infineon</HardwareType>
     <TrainingEnvironment>
     </TrainingEnvironment>
+    <ModelFamily>Conv2D</ModelFamily>
+    <ModelFlavor>SmallKern</ModelFlavor>
+    <ClassifierType>Dense</ClassifierType>
+    <Optimization>Balanced</Optimization>
+    <Pooling>True</Pooling>
+    <Downscale>False</Downscale>
+    <LearnRate>Mid</LearnRate>
+    <RegularizationFactor>Low</RegularizationFactor>
+    <LastNetworkInputShape>[10]</LastNetworkInputShape>
+    <LastClassCount>3</LastClassCount>
     <Optimizer>
-      <LearningRate>0.05</LearningRate>
-      <WeightDecay>0.005</WeightDecay>
+      <LearningRate>0.001</LearningRate>
+      <WeightDecay>0.0001</WeightDecay>
     </Optimizer>
     <BuildSteps>
       <Training />
       <ConfusionMatrix />
     </BuildSteps>
   </ModelFactory>
-  <Database balance="AnnotatedLength">
-    <DataSet id="train" targetSize="0.6" />
-    <DataSet id="validation" targetSize="0.2" />
-    <DataSet id="test" targetSize="0.2" />
+  <Database balance="AnnotatedLength" redistributionScope="Everything">
+    <SymbolMap>
+      <Symbol name="(unlabeled)" id="0" weight="1" />
+      <Symbol name="empty_box" id="1" weight="1" />
+      <Symbol name="table" id="2" weight="1" />
+    </SymbolMap>
+    <DataSet id="unassigned" targetSize="0" labels="Unassigned" />
+    <DataSet id="train" targetSize="0.6" labels="Complete">
+      <Session name="empty_box_uni_2" sessionId="e778aad3-34d3-4d96-be1f-0037c0ca1656" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Radar Data" tags="None">
+        <DataFile shape="[1,128,1]" samplerate="200" modified="5250750867506111364" start="0.0024999" length="63.835">../Radar_data_livecollection/empty_box_uni_2/Radar-Data.data</DataFile>
+        <SessionFile>../Radar_data_livecollection/empty_box_uni_2/empty_box_uni_2.imsession</SessionFile>
+        <LabelFile modified="5250750875619635310">../Radar_data_livecollection/empty_box_uni_2/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="63.7397031">empty_box</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="empty_table_uni3" sessionId="fd8b6bf3-6c61-4fcb-a313-e4e1d38aca6d" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Radar Data" tags="None">
+        <DataFile shape="[1,128,1]" samplerate="200" modified="5250750852771156116" start="0.0024999" length="64.315">../Radar_data_livecollection/empty_table_uni_4/Radar-Data.data</DataFile>
+        <SessionFile>../Radar_data_livecollection/empty_table_uni_4/empty_table_uni3.imsession</SessionFile>
+        <LabelFile modified="5250750876587559014">../Radar_data_livecollection/empty_table_uni_4/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="64.2011294">table</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="empty_table_uni_3" sessionId="79a11158-c7b3-4075-bf18-278840e6f447" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Radar Data" tags="None">
+        <DataFile shape="[1,128,1]" samplerate="200" modified="5250750851922894664" start="0.0024999" length="67.675">../Radar_data_livecollection/empty_table_uni_3/Radar-Data.data</DataFile>
+        <SessionFile>../Radar_data_livecollection/empty_table_uni_3/empty_table_uni_3.imsession</SessionFile>
+        <LabelFile modified="5250750876428876739">../Radar_data_livecollection/empty_table_uni_3/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="67.1331354">table</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="empty_box_uni_4" sessionId="2141f9a4-4847-4662-94f9-8e90d0ca92d0" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Radar Data" tags="None">
+        <DataFile shape="[1,128,1]" samplerate="200" modified="5250750872474817105" start="0.0024999" length="89.08500000000001">../Radar_data_livecollection/empty_box_uni_4/Radar-Data.data</DataFile>
+        <SessionFile>../Radar_data_livecollection/empty_box_uni_4/empty_box_uni_4.imsession</SessionFile>
+        <LabelFile modified="5250750872468104602">../Radar_data_livecollection/empty_box_uni_4/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="86.665548">empty_box</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+    </DataSet>
+    <DataSet id="validation" targetSize="0.2" labels="Complete">
+      <Session name="empty_box_uni0" sessionId="681762bd-6d8e-47cf-8226-b68f2e652590" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Radar Data" tags="None">
+        <DataFile shape="[1,128,1]" samplerate="200" modified="5250750856256886801" start="0.0024999" length="65.755">../Radar_data_livecollection/empty_box_uni_1/Radar-Data.data</DataFile>
+        <SessionFile>../Radar_data_livecollection/empty_box_uni_1/empty_box_uni0.imsession</SessionFile>
+        <LabelFile modified="5250750874552859932">../Radar_data_livecollection/empty_box_uni_1/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="65.6597031">empty_box</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="empty_table_uni" sessionId="20a98f9d-2d87-49be-a55b-4ab6653c7ed4" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Radar Data" tags="None">
+        <DataFile shape="[1,128,1]" samplerate="200" modified="5250750849112028201" start="0.0024999" length="61.915">../Radar_data_livecollection/empty_table_uni_1/Radar-Data.data</DataFile>
+        <SessionFile>../Radar_data_livecollection/empty_table_uni_1/empty_table_uni.imsession</SessionFile>
+        <LabelFile modified="5250750849106405552">../Radar_data_livecollection/empty_table_uni_1/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="59.8209598">table</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+    </DataSet>
+    <DataSet id="test" targetSize="0.2" labels="Complete">
+      <Session name="empty_box_uni_3" sessionId="23954992-9612-4dba-8181-01a2032fd114" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Radar Data" tags="None">
+        <DataFile shape="[1,128,1]" samplerate="200" modified="5250750870871228007" start="0.0024999" length="65.275">../Radar_data_livecollection/empty_box_uni_3/Radar-Data.data</DataFile>
+        <SessionFile>../Radar_data_livecollection/empty_box_uni_3/empty_box_uni_3.imsession</SessionFile>
+        <LabelFile modified="5250750870866374133">../Radar_data_livecollection/empty_box_uni_3/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="63.2136376">empty_box</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+    </DataSet>
   </Database>
 </ImagimobStudio>
