@@ -20,10 +20,10 @@ class Device(db.Model):
     )
 
     inventory_items = db.relationship(
-        "InventoryItem", backref="device", lazy=True
+        "InventoryItem", backref="device", lazy=True, cascade="all, delete-orphan"
     )
     detection_events = db.relationship(
-        "DetectionEvent", backref="device", lazy=True
+        "DetectionEvent", backref="device", lazy=True, cascade="all, delete-orphan"
     )
 
     def to_dict(self):
