@@ -3,9 +3,9 @@
 # ============================================================
 
 # ---- Wi-Fi ----
-WIFI_SSID = "MausaNetwork"
-WIFI_PASS = "FoxyAndPatty2024!"
-WIFI_TIMEOUT = 15
+WIFI_SSID = "YourWiFiSSID"
+WIFI_PASS = "YourWiFiPassword"
+WIFI_TIMEOUT = 15  # seconds to wait for connection
 
 # ---- Server ----
 SERVER_HOST = "192.168.0.129"
@@ -14,7 +14,7 @@ API_BASE = "http://{}:{}".format(SERVER_HOST, SERVER_PORT)
 
 # ---- Device Identity ----
 DEVICE_ID = 4
-API_KEY = "89221d1d1a73e54b15c8bf1f3b232f26927ff975024f93502f8dd5af63e7468c"
+API_KEY = "your Api-key"
 
 # ---- Detection Loop ----
 DETECTION_INTERVAL = 10
