@@ -11,15 +11,15 @@
 import time
 
 import config
-import wifi
+
 import api_client
-import array
+#import deepcraft_model
 from radar_lib import compute_fft_1d, compute_frobenius_norm
 
 
 IMAI_DATA_OUT_SYMBOLS = ['empty_box', 'table', 'unlabeled']
 
-output_buffer = array.array('f', [0.0] * len(IMAI_DATA_OUT_SYMBOLS))
+
 def run_inference(model, enqueue_buffer, output_buffer, input_dim, output_dim):
     """
     Run the AI model and return (label, confidence).

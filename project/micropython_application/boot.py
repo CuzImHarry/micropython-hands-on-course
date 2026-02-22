@@ -6,6 +6,8 @@
 # ============================================================
 
 import wifi
+import radar_lib
+import deepcraft_model
 
 print()
 print("=" * 40)
@@ -17,3 +19,10 @@ try:
 except RuntimeError as e:
     print(e)
     print("[Boot] Will retry in main.py")
+    
+    
+radar = radar_lib.RadarController()
+radar.setup()
+
+
+

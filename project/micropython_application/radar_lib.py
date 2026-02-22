@@ -4,7 +4,7 @@ from machine import Pin, SPI
 import BGT60TRXX as BGT
 
 class RadarController:
-    def __init__(self, start_freq=58_000_000, bandwidth=4_500_000, adc_div=60, samples_per_chirp=128, no_of_chirps=1):
+    def __init__(self, start_freq=57_500_000, bandwidth=5_000_000, adc_div=60, samples_per_chirp=128, no_of_chirps=1):
         self.no_of_chirps = no_of_chirps
         self.samples_per_chirp = samples_per_chirp
         self.words = samples_per_chirp * no_of_chirps
