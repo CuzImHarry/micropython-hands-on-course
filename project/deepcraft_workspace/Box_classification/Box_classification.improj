@@ -293,7 +293,7 @@
         </Unit>
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">32</Argument>
-          <Argument param="kernel_size" type="Int32">3</Argument>
+          <Argument param="kernel_size" type="Int32">5</Argument>
           <Argument param="strides" type="Int32">1</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
@@ -718,6 +718,15 @@
           <Label count="1" length="40.5458592">mpty_box</Label>
           <Label count="1" length="47.5572792">noise</Label>
           <Label count="1" length="28.4578975">table</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="table2" sessionId="c40b0872-22ae-4734-8fc7-f5504810a97f" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Radar Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250751884743462114" start="0.0024999" length="90.715">../Radar_data_livecollection/setup_13_02/table2/Radar-Data.data</DataFile>
+        <SessionFile>../Radar_data_livecollection/setup_13_02/table2/table2.imsession</SessionFile>
+        <LabelFile modified="5250751884741548906">../Radar_data_livecollection/setup_13_02/table2/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="85.7245973">table</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
