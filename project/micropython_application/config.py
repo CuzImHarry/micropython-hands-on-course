@@ -3,8 +3,8 @@
 # ============================================================
 
 # ---- Wi-Fi ----
-WIFI_SSID = "Fuchsbau"
-WIFI_PASS = "Nordkap2022!"
+WIFI_SSID = "SSID"
+WIFI_PASS = "PASSWORD"
 WIFI_TIMEOUT = 15  # seconds to wait for connection
 
 # ---- Server ----

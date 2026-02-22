@@ -44,20 +44,24 @@ class RadarController:
         self.sensor.initSensor()
         print("Radar sensor initialized successfully.")
 
-    def read_fifo(self):
-        """Triggers a frame, reads the raw buffer, and resets the FIFO."""
+    def get_raw_samples(self):
+        """
+        Triggers a radar frame, reads the FIFO, unpacks data, and returns
+        the 128 raw ADC samples as a list of floats.
+        """
         self.sensor.startFrame()
-        time.sleep_ms(5) # Allow time to capture
+        time.sleep_ms(10)  # Allow time for frame capture
         
         try:
-            # Note: adjust this method name if your specific wrapper differs
-            raw_data = self.sensor.get_fifo_data() 
-        except AttributeError:
-            raw_data = []
-            print("Error: Could not read FIFO. Check wrapper method name.")
-            
-        self.sensor.resetFIFO()
-        return raw_data
+            self.sensor.readFifo()
+            self.sensor.unpackRecData()
+            # fft.re contains the unpacked 12-bit ADC values as floats
+            return list(self.sensor.fft.re)
+        except Exception as e:
+            print("[Radar] Error reading samples:", e)
+            return None
+        finally:
+            self.sensor.resetFIFO()
 
 # --- Math Utilities ---
 

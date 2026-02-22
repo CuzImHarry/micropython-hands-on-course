@@ -3,64 +3,55 @@
 # ============================================================
 # Runs after boot.py.  Performs the following cycle:
 #   1. Ensure Wi-Fi is connected (reconnect if dropped)
-#   2. Run AI inference (placeholder — integrate DeepCraft)
+#   2. Run AI inference on raw radar data
 #   3. Send detection result to the inventory server
 #   4. Sleep and repeat
 # ============================================================
 
+import array
 import time
 
 import config
 
 import api_client
-#import deepcraft_model
-from radar_lib import compute_fft_1d, compute_frobenius_norm
+
+import wifi
 
 
-IMAI_DATA_OUT_SYMBOLS = ['empty_box', 'table', 'unlabeled']
+IMAI_DATA_OUT_SYMBOLS = ['unlabeled', 'empty_box', 'table']
 
 
 def run_inference(model, enqueue_buffer, output_buffer, input_dim, output_dim):
     """
-    Run the AI model and return (label, confidence).
-
-    >>> REPLACE THIS with your actual DeepCraft model call <<<
-
-    Example with DeepCraft:
-        from deepcraft import Model
-        model = Model("inventory_classifier")
-        result = model.predict(camera.capture())
-        return result.label, result.confidence
+    Run the AI model on raw radar data and return (label, confidence).
+    The model was trained on raw 128-sample radar vectors — no FFT needed.
     """
-    global radar
+    # Access the global radar object initialised in boot.py
+    import __main__
+    radar = getattr(__main__, 'radar', None)
     
-    # 1. Get Raw Data
+    if radar is None:
+        print("[Inference] ERROR: Radar object not found.")
+        return "error", 0.0
+    
     while True:
-        # 1. Get Raw Data
-        raw_data = radar.read_fifo()
+        # 1. Get raw ADC samples from radar (128 floats)
+        raw_data = radar.get_raw_samples()
             
-        if not raw_data:
-            time.sleep_ms(5)
+        if raw_data is None:
+            print("[Inference] No data from radar, retrying...")
+            time.sleep_ms(50)
             continue
             
-        # 2. Compute FFT
-        # Ensure raw_data length is a power of 2 for this basic FFT algorithm
-        fft_data = compute_fft_1d(raw_data)
-            
-        # 3. Compute Frobenius Norm on the FFT data
-        f_norm = compute_frobenius_norm(fft_data)
-            
-        # 4. Map Features to the Enqueue Buffer
-       
-        for i in range(min(input_dim, len(fft_data))):
-            val = fft_data[i]
-            # Convert complex FFT output to absolute magnitude
-            enqueue_buffer[i] = (val.real**2 + val.imag**2)**0.5
+        # 2. Normalize raw samples to [0, 1] and copy into enqueue buffer
+        #    12-bit ADC range is 0-4095; DeepCraft expects values in [0, 1]
+        for i in range(min(input_dim, len(raw_data))):
+            enqueue_buffer[i] = float(raw_data[i]) / 4095.0
 
-        # 5. Enqueue data to the model's sliding window
+        # 3. Enqueue data to the model's sliding window
         model.enqueue(enqueue_buffer)
         
-        # 6. Dequeue to check if inference is ready
+        # 4. Dequeue to check if inference is ready
         result = model.dequeue(output_buffer)
 
         # result == 0 means the stride is complete and prediction is ready
@@ -72,11 +63,14 @@ def run_inference(model, enqueue_buffer, output_buffer, input_dim, output_dim):
                     max_val = output_buffer[i]
                     max_idx = i
             
-            # Prevent out-of-bounds if model outputs more classes than symbols
             if max_idx < len(IMAI_DATA_OUT_SYMBOLS):
                 label = IMAI_DATA_OUT_SYMBOLS[max_idx]
             else:
                 label = "unknown"
+            
+            # Clear output buffer to avoid stale data on next dequeue
+            for i in range(output_dim):
+                output_buffer[i] = 0.0
                 
             return label, max_val
             
@@ -84,11 +78,8 @@ def run_inference(model, enqueue_buffer, output_buffer, input_dim, output_dim):
             print("[Inference] ERROR: Memory allocation error inside model.")
             return "error", 0.0
             
-        # If result == -1, the sliding window isn't full/ready yet. 
-        # The while loop will naturally continue to grab the next radar frame.
-        
-    
-    
+        # result == -1: sliding window not full yet, keep feeding frames
+
 
 def main():
     print("\n[Main] Starting detection loop")

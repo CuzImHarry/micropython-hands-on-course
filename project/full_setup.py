@@ -129,25 +129,42 @@ LED_PIN = "P13_7"
     print("[5/5] Flashing files to device via mpremote...")
     app_dir = os.path.join(os.getcwd(), "micropython_application")
     
-    # 6a. Flash lib folder first (if exists)
+    # 6a. Flash lib folder (radar drivers, DFT, etc.)
     lib_dir = os.path.join(app_dir, "lib")
     if os.path.exists(lib_dir):
-        print("      Copying lib folder...")
-        run_command(f"mpremote cp -r \"{lib_dir}\" \":/\"")
+        print("      Copying lib/ folder...")
+        run_command(f"mpremote mkdir :/lib", cwd=app_dir)
+        for lib_file in os.listdir(lib_dir):
+            lib_file_path = os.path.join(lib_dir, lib_file)
+            if os.path.isfile(lib_file_path):
+                print(f"        -> {lib_file}")
+                run_command(f'mpremote cp "{lib_file_path}" ":lib/{lib_file}"')
 
-    # 6b. Flash other files
-    files = ["config.py", "wifi.py", "api_client.py", "main.py", "boot.py"]
+    # 6b. Flash the DeepCraft model (.mpy)
+    model_path = os.path.join(app_dir, "Models", "Model_final_small", "deepcraft_model.mpy")
+    if os.path.exists(model_path):
+        print("      Copying deepcraft_model.mpy...")
+        run_command(f'mpremote cp "{model_path}" ":deepcraft_model.mpy"')
+    else:
+        print(f"      Warning: Model not found at {model_path}")
+
+    # 6c. Flash application files
+    files = ["config.py", "wifi.py", "api_client.py", "radar_lib.py", "main.py", "boot.py"]
     
     for file in files:
         file_path = os.path.join(app_dir, file)
         if os.path.exists(file_path):
             print(f"      Copying {file}...")
-            run_command(f"mpremote cp \"{file_path}\" \":{file}\"")
+            run_command(f'mpremote cp "{file_path}" ":{file}"')
         else:
             print(f"      Warning: {file} not found in {app_dir}")
 
+    # 7. Reset the device so it boots with the new firmware
+    print("\n      Resetting device...")
+    run_command("mpremote reset")
+
     print("\n==========================================")
-    print("   Setup Complete! Device is Flashed.")
+    print("   Setup Complete! Device is Flashed and Reset.")
     print(f"   Dashboard: http://localhost:3000")
     print("==========================================")
 

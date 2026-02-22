@@ -4,10 +4,14 @@
 # Connects to Wi-Fi so that main.py can immediately use the
 # network.  If Wi-Fi fails here, main.py should handle retries.
 # ============================================================
+import gc
 
+gc.collect()
+print("RAM free:",gc.mem_free())
+
+import deepcraft_model
 import wifi
 import radar_lib
-import deepcraft_model
 
 print()
 print("=" * 40)
