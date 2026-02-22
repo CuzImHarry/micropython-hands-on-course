@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ImagimobStudio version="1.1.0">
-  <Job id="9edef88e-0f06-11f1-bd9a-b327fa8f34ed" />
+  <Job id="ec13a3a0-0ccd-11f1-a042-b10426d68b90" />
   <ProjectType>Classification</ProjectType>
   <ProjectId>dfaec934-3d93-4903-b017-011e08110e0f</ProjectId>
   <Preprocessor inshape="[1,65,1]" intype="Float32" infreq="200" outshape="[100,65]" outtype="Float32">
@@ -17,22 +17,22 @@
     <Epochs>100</Epochs>
     <BatchSize>16</BatchSize>
     <SplitCount>16</SplitCount>
-    <Patience>20</Patience>
+    <Patience>10</Patience>
     <AppendModels>False</AppendModels>
     <LossFunction>CategoricalCrossentropy</LossFunction>
     <HardwareType>Infineon</HardwareType>
     <TrainingEnvironment>
     </TrainingEnvironment>
     <ModelFamily>Conv1D</ModelFamily>
-    <ModelFlavor>LargeKern</ModelFlavor>
+    <ModelFlavor>SmallKern</ModelFlavor>
     <ClassifierType>Dense</ClassifierType>
     <Optimization>Balanced</Optimization>
     <Pooling>True</Pooling>
     <Downscale>False</Downscale>
     <LearnRate>Mid</LearnRate>
-    <RegularizationFactor>Low</RegularizationFactor>
+    <RegularizationFactor>Mid</RegularizationFactor>
     <LastNetworkInputShape>[100,65]</LastNetworkInputShape>
-    <LastClassCount>3</LastClassCount>
+    <LastClassCount>4</LastClassCount>
     <Optimizer>
       <LearningRate>0.001</LearningRate>
       <WeightDecay>0.0001</WeightDecay>
@@ -43,22 +43,22 @@
     </BuildSteps>
   </ModelFactory>
   <Models>
-    <Model name="conv1d-small-balanced-0" id="ea724ff8-a8d5-4bb3-ad87-7ee6606ed1b0">
+    <Model name="conv1d-small-balanced-0" id="30183c92-434c-4305-bf61-3bcd8a47eed6">
       <LossFunction>CategoricalCrossentropy</LossFunction>
       <Epochs>100</Epochs>
       <BatchSize>16</BatchSize>
       <SplitCount>16</SplitCount>
-      <Patience>20</Patience>
+      <Patience>10</Patience>
       <TrainingEnvironment>
       </TrainingEnvironment>
       <Optimizer>
         <LearningRate>0.004</LearningRate>
-        <WeightDecay>0.0001</WeightDecay>
+        <WeightDecay>0.001</WeightDecay>
       </Optimizer>
-      <Network inshape="[100,65]" intype="Float32" infreq="0" outshape="[3]" outtype="Float32">
+      <Network inshape="[100,65]" intype="Float32" infreq="0" outshape="[4]" outtype="Float32">
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">12</Argument>
-          <Argument param="kernel_size" type="Int32">5</Argument>
+          <Argument param="kernel_size" type="Int32">3</Argument>
           <Argument param="strides" type="Int32">2</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
@@ -73,7 +73,7 @@
         </Unit>
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">24</Argument>
-          <Argument param="kernel_size" type="Int32">5</Argument>
+          <Argument param="kernel_size" type="Int32">3</Argument>
           <Argument param="strides" type="Int32">1</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
@@ -81,7 +81,7 @@
         </Unit>
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">24</Argument>
-          <Argument param="kernel_size" type="Int32">5</Argument>
+          <Argument param="kernel_size" type="Int32">3</Argument>
           <Argument param="strides" type="Int32">1</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
@@ -99,9 +99,12 @@
           <Argument param="strides" type="Int32">2</Argument>
           <Argument param="padding" type="String">valid</Argument>
         </Unit>
+        <Unit id="Core.Layers.Dropout">
+          <Argument param="rate" type="Double">0.05</Argument>
+        </Unit>
         <Unit id="Core.Layers.Flatten" />
         <Unit id="Core.Layers.Dense">
-          <Argument param="units" type="Int32">30</Argument>
+          <Argument param="units" type="Int32">40</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
           <Argument param="activation" type="String">linear</Argument>
         </Unit>
@@ -113,10 +116,10 @@
           <Argument param="activation" type="String">relu</Argument>
         </Unit>
         <Unit id="Core.Layers.Dropout">
-          <Argument param="rate" type="Double">0.1</Argument>
+          <Argument param="rate" type="Double">0.2</Argument>
         </Unit>
         <Unit id="Core.Layers.Dense">
-          <Argument param="units" type="Int32">3</Argument>
+          <Argument param="units" type="Int32">4</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
           <Argument param="activation" type="String">linear</Argument>
         </Unit>
@@ -130,8 +133,9 @@
       </BuildSteps>
       <SymbolWeights override="False">
         <SymbolWeight symbol="(unlabeled)" weight="1" />
-        <SymbolWeight symbol="empty_box" weight="1" />
+        <SymbolWeight symbol="mpty_box" weight="1" />
         <SymbolWeight symbol="table" weight="1" />
+        <SymbolWeight symbol="noise" weight="1" />
       </SymbolWeights>
       <Preprocessor override="False" inshape="[1,65,1]" intype="Float32" infreq="200" outshape="[100,65]" outtype="Float32">
         <Unit id="Core.Packages.ContextualWindow">
@@ -145,22 +149,22 @@
       </Preprocessor>
       <Postprocessor override="False" inshape="[128,3]" intype="Float32" infreq="1" outshape="[128,3]" outtype="Float32" />
     </Model>
-    <Model name="conv1d-small-balanced-1" id="77641dd1-5aed-4d64-b02f-436b930dbe7c">
+    <Model name="conv1d-small-balanced-1" id="85150f7b-4542-4c1c-8c67-6ec34f4fc51a">
       <LossFunction>CategoricalCrossentropy</LossFunction>
       <Epochs>100</Epochs>
       <BatchSize>16</BatchSize>
       <SplitCount>16</SplitCount>
-      <Patience>20</Patience>
+      <Patience>10</Patience>
       <TrainingEnvironment>
       </TrainingEnvironment>
       <Optimizer>
         <LearningRate>0.004</LearningRate>
-        <WeightDecay>0.0001</WeightDecay>
+        <WeightDecay>0.001</WeightDecay>
       </Optimizer>
-      <Network inshape="[100,65]" intype="Float32" infreq="0" outshape="[3]" outtype="Float32">
+      <Network inshape="[100,65]" intype="Float32" infreq="0" outshape="[4]" outtype="Float32">
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">16</Argument>
-          <Argument param="kernel_size" type="Int32">5</Argument>
+          <Argument param="kernel_size" type="Int32">3</Argument>
           <Argument param="strides" type="Int32">2</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
@@ -175,7 +179,7 @@
         </Unit>
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">16</Argument>
-          <Argument param="kernel_size" type="Int32">5</Argument>
+          <Argument param="kernel_size" type="Int32">3</Argument>
           <Argument param="strides" type="Int32">1</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
@@ -183,7 +187,7 @@
         </Unit>
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">16</Argument>
-          <Argument param="kernel_size" type="Int32">5</Argument>
+          <Argument param="kernel_size" type="Int32">3</Argument>
           <Argument param="strides" type="Int32">1</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
@@ -201,9 +205,12 @@
           <Argument param="strides" type="Int32">2</Argument>
           <Argument param="padding" type="String">valid</Argument>
         </Unit>
+        <Unit id="Core.Layers.Dropout">
+          <Argument param="rate" type="Double">0.05</Argument>
+        </Unit>
         <Unit id="Core.Layers.Flatten" />
         <Unit id="Core.Layers.Dense">
-          <Argument param="units" type="Int32">30</Argument>
+          <Argument param="units" type="Int32">40</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
           <Argument param="activation" type="String">linear</Argument>
         </Unit>
@@ -215,10 +222,10 @@
           <Argument param="activation" type="String">relu</Argument>
         </Unit>
         <Unit id="Core.Layers.Dropout">
-          <Argument param="rate" type="Double">0.1</Argument>
+          <Argument param="rate" type="Double">0.2</Argument>
         </Unit>
         <Unit id="Core.Layers.Dense">
-          <Argument param="units" type="Int32">3</Argument>
+          <Argument param="units" type="Int32">4</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
           <Argument param="activation" type="String">linear</Argument>
         </Unit>
@@ -232,8 +239,9 @@
       </BuildSteps>
       <SymbolWeights override="False">
         <SymbolWeight symbol="(unlabeled)" weight="1" />
-        <SymbolWeight symbol="empty_box" weight="1" />
+        <SymbolWeight symbol="mpty_box" weight="1" />
         <SymbolWeight symbol="table" weight="1" />
+        <SymbolWeight symbol="noise" weight="1" />
       </SymbolWeights>
       <Preprocessor override="False" inshape="[1,65,1]" intype="Float32" infreq="200" outshape="[100,65]" outtype="Float32">
         <Unit id="Core.Packages.ContextualWindow">
@@ -247,22 +255,22 @@
       </Preprocessor>
       <Postprocessor override="False" inshape="[128,3]" intype="Float32" infreq="1" outshape="[128,3]" outtype="Float32" />
     </Model>
-    <Model name="conv1d-small-balanced-2" id="ddd91fd0-926f-4859-a4b9-00a1beecda96">
+    <Model name="conv1d-small-balanced-2" id="6e73d427-0200-47a8-b7cf-ee634e6e6a29">
       <LossFunction>CategoricalCrossentropy</LossFunction>
       <Epochs>100</Epochs>
       <BatchSize>16</BatchSize>
       <SplitCount>16</SplitCount>
-      <Patience>20</Patience>
+      <Patience>10</Patience>
       <TrainingEnvironment>
       </TrainingEnvironment>
       <Optimizer>
         <LearningRate>0.004</LearningRate>
-        <WeightDecay>0.0001</WeightDecay>
+        <WeightDecay>0.001</WeightDecay>
       </Optimizer>
-      <Network inshape="[100,65]" intype="Float32" infreq="0" outshape="[3]" outtype="Float32">
+      <Network inshape="[100,65]" intype="Float32" infreq="0" outshape="[4]" outtype="Float32">
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">16</Argument>
-          <Argument param="kernel_size" type="Int32">5</Argument>
+          <Argument param="kernel_size" type="Int32">3</Argument>
           <Argument param="strides" type="Int32">2</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
@@ -277,7 +285,7 @@
         </Unit>
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">32</Argument>
-          <Argument param="kernel_size" type="Int32">5</Argument>
+          <Argument param="kernel_size" type="Int32">3</Argument>
           <Argument param="strides" type="Int32">1</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
@@ -303,9 +311,12 @@
           <Argument param="strides" type="Int32">2</Argument>
           <Argument param="padding" type="String">valid</Argument>
         </Unit>
+        <Unit id="Core.Layers.Dropout">
+          <Argument param="rate" type="Double">0.05</Argument>
+        </Unit>
         <Unit id="Core.Layers.Flatten" />
         <Unit id="Core.Layers.Dense">
-          <Argument param="units" type="Int32">30</Argument>
+          <Argument param="units" type="Int32">40</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
           <Argument param="activation" type="String">linear</Argument>
         </Unit>
@@ -317,10 +328,10 @@
           <Argument param="activation" type="String">relu</Argument>
         </Unit>
         <Unit id="Core.Layers.Dropout">
-          <Argument param="rate" type="Double">0.1</Argument>
+          <Argument param="rate" type="Double">0.2</Argument>
         </Unit>
         <Unit id="Core.Layers.Dense">
-          <Argument param="units" type="Int32">3</Argument>
+          <Argument param="units" type="Int32">4</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
           <Argument param="activation" type="String">linear</Argument>
         </Unit>
@@ -334,8 +345,9 @@
       </BuildSteps>
       <SymbolWeights override="False">
         <SymbolWeight symbol="(unlabeled)" weight="1" />
-        <SymbolWeight symbol="empty_box" weight="1" />
+        <SymbolWeight symbol="mpty_box" weight="1" />
         <SymbolWeight symbol="table" weight="1" />
+        <SymbolWeight symbol="noise" weight="1" />
       </SymbolWeights>
       <Preprocessor override="False" inshape="[1,65,1]" intype="Float32" infreq="200" outshape="[100,65]" outtype="Float32">
         <Unit id="Core.Packages.ContextualWindow">
@@ -349,22 +361,22 @@
       </Preprocessor>
       <Postprocessor override="False" inshape="[128,3]" intype="Float32" infreq="1" outshape="[128,3]" outtype="Float32" />
     </Model>
-    <Model name="conv1d-small-balanced-3" id="20b59377-b47d-40cc-8f80-a1cb30e0db54">
+    <Model name="conv1d-small-balanced-3" id="a0b22842-827e-48fa-b8a4-3737557cc93e">
       <LossFunction>CategoricalCrossentropy</LossFunction>
       <Epochs>100</Epochs>
       <BatchSize>16</BatchSize>
       <SplitCount>16</SplitCount>
-      <Patience>20</Patience>
+      <Patience>10</Patience>
       <TrainingEnvironment>
       </TrainingEnvironment>
       <Optimizer>
         <LearningRate>0.004</LearningRate>
-        <WeightDecay>0.0001</WeightDecay>
+        <WeightDecay>0.001</WeightDecay>
       </Optimizer>
-      <Network inshape="[100,65]" intype="Float32" infreq="0" outshape="[3]" outtype="Float32">
+      <Network inshape="[100,65]" intype="Float32" infreq="0" outshape="[4]" outtype="Float32">
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">32</Argument>
-          <Argument param="kernel_size" type="Int32">5</Argument>
+          <Argument param="kernel_size" type="Int32">3</Argument>
           <Argument param="strides" type="Int32">2</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
@@ -379,7 +391,7 @@
         </Unit>
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">32</Argument>
-          <Argument param="kernel_size" type="Int32">5</Argument>
+          <Argument param="kernel_size" type="Int32">3</Argument>
           <Argument param="strides" type="Int32">1</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
@@ -387,7 +399,7 @@
         </Unit>
         <Unit id="Core.Layers.Convolution1D">
           <Argument param="filters" type="Int32">32</Argument>
-          <Argument param="kernel_size" type="Int32">5</Argument>
+          <Argument param="kernel_size" type="Int32">3</Argument>
           <Argument param="strides" type="Int32">1</Argument>
           <Argument param="padding" type="String">same</Argument>
           <Argument param="activation" type="String">linear</Argument>
@@ -405,9 +417,12 @@
           <Argument param="strides" type="Int32">2</Argument>
           <Argument param="padding" type="String">valid</Argument>
         </Unit>
+        <Unit id="Core.Layers.Dropout">
+          <Argument param="rate" type="Double">0.05</Argument>
+        </Unit>
         <Unit id="Core.Layers.Flatten" />
         <Unit id="Core.Layers.Dense">
-          <Argument param="units" type="Int32">30</Argument>
+          <Argument param="units" type="Int32">40</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
           <Argument param="activation" type="String">linear</Argument>
         </Unit>
@@ -419,10 +434,10 @@
           <Argument param="activation" type="String">relu</Argument>
         </Unit>
         <Unit id="Core.Layers.Dropout">
-          <Argument param="rate" type="Double">0.1</Argument>
+          <Argument param="rate" type="Double">0.2</Argument>
         </Unit>
         <Unit id="Core.Layers.Dense">
-          <Argument param="units" type="Int32">3</Argument>
+          <Argument param="units" type="Int32">4</Argument>
           <Argument param="use_bias" type="Boolean">False</Argument>
           <Argument param="activation" type="String">linear</Argument>
         </Unit>
@@ -436,8 +451,9 @@
       </BuildSteps>
       <SymbolWeights override="False">
         <SymbolWeight symbol="(unlabeled)" weight="1" />
-        <SymbolWeight symbol="empty_box" weight="1" />
+        <SymbolWeight symbol="mpty_box" weight="1" />
         <SymbolWeight symbol="table" weight="1" />
+        <SymbolWeight symbol="noise" weight="1" />
       </SymbolWeights>
       <Preprocessor override="False" inshape="[1,65,1]" intype="Float32" infreq="200" outshape="[100,65]" outtype="Float32">
         <Unit id="Core.Packages.ContextualWindow">
@@ -455,183 +471,253 @@
   <Database balance="AnnotatedLength" redistributionScope="Everything">
     <SymbolMap>
       <Symbol name="(unlabeled)" id="0" weight="1" />
-      <Symbol name="empty_box" id="1" weight="1" />
+      <Symbol name="mpty_box" id="1" weight="1" />
       <Symbol name="table" id="2" weight="1" />
+      <Symbol name="noise" id="3" weight="1" />
     </SymbolMap>
     <DataSet id="unassigned" targetSize="0" labels="Unassigned" />
     <DataSet id="train" targetSize="0.6" labels="Complete">
-      <Session name="mixed_3" sessionId="9f1b8494-807a-4dae-84bf-ceaf74f4d482" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
-        <DataFile shape="[1,65,1]" samplerate="200" modified="5250751884733774331" start="0.0024999" length="300.475">../Radar_data_livecollection/setup_13_02/mixed_3/Frobenius-norm-Data.data</DataFile>
-        <SessionFile>../Radar_data_livecollection/setup_13_02/mixed_3/mixed_3.imsession</SessionFile>
-        <LabelFile modified="5250751884733774331">../Radar_data_livecollection/setup_13_02/mixed_3/Live-Labeling.label</LabelFile>
+      <Session name="Session-2026-02-18--09-02-26" sessionId="3309f9e5-6252-4acf-ba4a-80b1971577e7" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756004392472912" start="0.0024999" length="124.795">../../../../setup_180226/Session-2026-02-18--09-02-26/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--09-02-26/Session-2026-02-18--09-02-26.imsession</SessionFile>
+        <LabelFile modified="5250756004387206266">../../../../setup_180226/Session-2026-02-18--09-02-26/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="2" length="107.9725298">table</Label>
-          <Label count="2" length="95.7851771">empty_box</Label>
+          <Label count="1" length="124.7406428">mpty_box</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="mixed_4" sessionId="8e6f6e2e-5ed7-442e-b661-e8065c6f23f3" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
-        <DataFile shape="[1,65,1]" samplerate="200" modified="5250751884739316721" start="0.0024999" length="300.475">../Radar_data_livecollection/setup_13_02/mixed_4/Frobenius-norm-Data.data</DataFile>
-        <SessionFile>../Radar_data_livecollection/setup_13_02/mixed_4/mixed_4.imsession</SessionFile>
-        <LabelFile modified="5250751884739316721">../Radar_data_livecollection/setup_13_02/mixed_4/Live-Labeling.label</LabelFile>
+      <Session name="Session-2026-02-18--09-05-39" sessionId="bdbf1ad2-3c61-4be8-86d8-ff8daac639ba" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756005942533585" start="0.0024999" length="125.75500000000001">../../../../setup_180226/Session-2026-02-18--09-05-39/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--09-05-39/Session-2026-02-18--09-05-39.imsession</SessionFile>
+        <LabelFile modified="5250756005937439074">../../../../setup_180226/Session-2026-02-18--09-05-39/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="2" length="144.3019927">table</Label>
-          <Label count="2" length="110.0113634">empty_box</Label>
+          <Label count="1" length="125.6762016">mpty_box</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="mixed10" sessionId="26b95553-d7df-46e9-ae2b-5f42dbf34399" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
-        <DataFile shape="[1,65,1]" samplerate="200" modified="5250751884694710794" start="0.0024999" length="300.475">../Radar_data_livecollection/setup_13_02/mixed10/Frobenius-norm-Data.data</DataFile>
-        <SessionFile>../Radar_data_livecollection/setup_13_02/mixed10/mixed10.imsession</SessionFile>
-        <LabelFile modified="5250751884694731276">../Radar_data_livecollection/setup_13_02/mixed10/Live-Labeling.label</LabelFile>
+      <Session name="Session-2026-02-18--09-21-11" sessionId="9fb5e6bc-3a10-4e57-bc18-6080a1afb19c" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756015260313705" start="0.0024999" length="124.795">../../../../setup_180226/Session-2026-02-18--09-21-11/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--09-21-11/Session-2026-02-18--09-21-11.imsession</SessionFile>
+        <LabelFile modified="5250756015255422638">../../../../setup_180226/Session-2026-02-18--09-21-11/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="1" length="114.2485942">table</Label>
-          <Label count="1" length="112.5819409">empty_box</Label>
+          <Label count="1" length="124.7336596">mpty_box</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="mixed12" sessionId="90cfd283-fbff-435d-a757-ee4e484fed45" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
-        <DataFile shape="[1,65,1]" samplerate="200" modified="5250751884668528108" start="0.0024999" length="169.915">../Radar_data_livecollection/mixed12/Frobenius-norm-Data.data</DataFile>
-        <SessionFile>../Radar_data_livecollection/mixed12/mixed12.imsession</SessionFile>
-        <LabelFile modified="5250751884668528108">../Radar_data_livecollection/mixed12/Live-Labeling.label</LabelFile>
+      <Session name="Session-2026-02-18--09-38-54" sessionId="260f9f01-db99-4077-a28f-26269275b63a" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756025918278878" start="0.0024999" length="130.075">../../../../setup_180226/Session-2026-02-18--09-38-54/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--09-38-54/Session-2026-02-18--09-38-54.imsession</SessionFile>
+        <LabelFile modified="5250756025912847744">../../../../setup_180226/Session-2026-02-18--09-38-54/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="2" length="84.0781465">empty_box</Label>
-          <Label count="1" length="35.9941647">table</Label>
+          <Label count="1" length="129.99271">table</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="mixed5" sessionId="cba7303a-d4e6-40a0-8c20-96d947e60dbd" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
-        <DataFile shape="[1,65,1]" samplerate="200" modified="5250751884703478772" start="0.0024999" length="300.475">../Radar_data_livecollection/setup_13_02/mixed5/Frobenius-norm-Data.data</DataFile>
-        <SessionFile>../Radar_data_livecollection/setup_13_02/mixed5/mixed5.imsession</SessionFile>
-        <LabelFile modified="5250751884703478772">../Radar_data_livecollection/setup_13_02/mixed5/Live-Labeling.label</LabelFile>
+      <Session name="Session-2026-02-18--09-42-18" sessionId="7b5199d8-896d-4066-9577-c48fa9985cd6" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756027924591718" start="0.0024999" length="125.75500000000001">../../../../setup_180226/Session-2026-02-18--09-42-18/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--09-42-18/Session-2026-02-18--09-42-18.imsession</SessionFile>
+        <LabelFile modified="5250756027919262696">../../../../setup_180226/Session-2026-02-18--09-42-18/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="3" length="136.2816949">empty_box</Label>
-          <Label count="2" length="96.8448032">table</Label>
+          <Label count="1" length="125.6831848">table</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="mixed6" sessionId="dfe833e2-544a-4aeb-a087-deca0a4a5c4d" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
-        <DataFile shape="[1,65,1]" samplerate="200" modified="5250751884709675113" start="0.0024999" length="300.475">../Radar_data_livecollection/setup_13_02/mixed6/Frobenius-norm-Data.data</DataFile>
-        <SessionFile>../Radar_data_livecollection/setup_13_02/mixed6/mixed6.imsession</SessionFile>
-        <LabelFile modified="5250751884709749366">../Radar_data_livecollection/setup_13_02/mixed6/Live-Labeling.label</LabelFile>
+      <Session name="Session-2026-02-18--10-18-24_unlabled" sessionId="3415c4b3-8c86-43c9-8daa-0f4ea85b68ad" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756049845407041" start="0.0024999" length="137.275">../../../../setup_180226/Session-2026-02-18--10-18-24_unlabled/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--10-18-24_unlabled/Session-2026-02-18--10-18-24_unlabled.imsession</SessionFile>
+        <LabelFile modified="5250756167834756886">../../../../setup_180226/Session-2026-02-18--10-18-24_unlabled/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="2" length="112.7697974">table</Label>
-          <Label count="1" length="73.6939922">empty_box</Label>
+          <Label count="1" length="130.6840882">noise</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="box_1214" sessionId="c773cc3b-3a48-49ac-86f4-f6e24b0db84b" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
-        <DataFile shape="[1,65,1]" samplerate="200" modified="5250751884672122826" start="0.0024999" length="121.915">../Radar_data_livecollection/setup_13_02/box_1214/Frobenius-norm-Data.data</DataFile>
-        <SessionFile>../Radar_data_livecollection/setup_13_02/box_1214/box_1214.imsession</SessionFile>
-        <LabelFile modified="5250751884672246562">../Radar_data_livecollection/setup_13_02/box_1214/Live-Labeling.label</LabelFile>
+      <Session name="Session-2026-02-18--10-21-37_unlabled" sessionId="86b3d860-8e91-4d70-9d3d-d29f385b6926" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756051680626251" start="0.0024999" length="140.635">../../../../setup_180226/Session-2026-02-18--10-21-37_unlabled/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--10-21-37_unlabled/Session-2026-02-18--10-21-37_unlabled.imsession</SessionFile>
+        <LabelFile modified="5250756168276021978">../../../../setup_180226/Session-2026-02-18--10-21-37_unlabled/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="5" length="111.972847">empty_box</Label>
+          <Label count="1" length="135.1711391">noise</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="table_1211" sessionId="f2b24b9f-302c-4fd4-a7c9-33b8c4d40e3c" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
-        <DataFile shape="[1,65,1]" samplerate="200" modified="5250751884747609382" start="0.0024999" length="117.595">../Radar_data_livecollection/setup_13_02/table_1211/Frobenius-norm-Data.data</DataFile>
-        <SessionFile>../Radar_data_livecollection/setup_13_02/table_1211/table_1211.imsession</SessionFile>
-        <LabelFile modified="5250751884747609382">../Radar_data_livecollection/setup_13_02/table_1211/Live-Labeling.label</LabelFile>
+      <Session name="Session-2026-02-18--10-26-59_unlabled" sessionId="3f0a5640-9236-4e02-82da-f1b80c30718d" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756054912485396" start="0.0024999" length="144.475">../../../../setup_180226/Session-2026-02-18--10-26-59_unlabled/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--10-26-59_unlabled/Session-2026-02-18--10-26-59_unlabled.imsession</SessionFile>
+        <LabelFile modified="5250756168518359379">../../../../setup_180226/Session-2026-02-18--10-26-59_unlabled/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="1" length="116.6283298">table</Label>
+          <Label count="1" length="136.913454">noise</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="Session-2026-02-15--11-22-49" sessionId="5a95466a-a332-470e-bb0a-111bc331e641" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
-        <DataFile shape="[1,65,1]" samplerate="200" modified="5250753496188860211" start="0.0024999" length="83.995">../Radar_data_livecollection/setup_150226/Session-2026-02-15--11-22-49/Frobenius-norm-Data.data</DataFile>
-        <SessionFile>../Radar_data_livecollection/setup_150226/Session-2026-02-15--11-22-49/Session-2026-02-15--11-22-49.imsession</SessionFile>
-        <LabelFile modified="5250753496187025958">../Radar_data_livecollection/setup_150226/Session-2026-02-15--11-22-49/Live-Labeling.label</LabelFile>
+      <Session name="Session-2026-02-18--09-45-11" sessionId="3aa4860f-d3da-46e5-a7de-ea4ba8fefdc6" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756029663931426" start="0.0024999" length="134.875">../../../../setup_180226/Session-2026-02-18--09-45-11/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--09-45-11/Session-2026-02-18--09-45-11.imsession</SessionFile>
+        <LabelFile modified="5250756029657639746">../../../../setup_180226/Session-2026-02-18--09-45-11/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="4" length="57.9914705">empty_box</Label>
-          <Label count="1" length="14.3596008">table</Label>
+          <Label count="1" length="134.7962016">table</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="emptybox1" sessionId="038ee5bd-95a9-4d62-864b-d889f9bd9dbe" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Radar Data" tags="None">
-        <DataFile shape="[1,65,1]" samplerate="200" modified="5250751884674406110" start="0.0024999" length="90.715">../Radar_data_livecollection/setup_13_02/emptybox1/Radar-Data.data</DataFile>
-        <SessionFile>../Radar_data_livecollection/setup_13_02/emptybox1/emptybox1.imsession</SessionFile>
-        <LabelFile modified="5250751884672312209">../Radar_data_livecollection/setup_13_02/emptybox1/Live-Labeling.label</LabelFile>
+      <Session name="Session-2026-02-18--10-55-09" sessionId="462c0d93-97d3-4a4a-96bf-59887f3994bf" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756071620550668" start="0.0024999" length="120.47500000000001">../../../../setup_180226/Session-2026-02-18--10-55-09/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--10-55-09/Session-2026-02-18--10-55-09.imsession</SessionFile>
+        <LabelFile modified="5250756071615667915">../../../../setup_180226/Session-2026-02-18--10-55-09/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="1" length="86.3472036">empty_box</Label>
+          <Label count="1" length="120.2913984">table</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="emptybox2" sessionId="435a9ff9-0fbc-465a-ae65-18f993cef04a" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Radar Data" tags="None">
-        <DataFile shape="[1,65,1]" samplerate="200" modified="5250751884676913811" start="0.0024999" length="90.235">../Radar_data_livecollection/setup_13_02/emptybox2/Radar-Data.data</DataFile>
-        <SessionFile>../Radar_data_livecollection/setup_13_02/emptybox2/emptybox2.imsession</SessionFile>
-        <LabelFile modified="5250751884674602705">../Radar_data_livecollection/setup_13_02/emptybox2/Live-Labeling.label</LabelFile>
+      <Session name="Session-2026-02-18--11-03-06" sessionId="51b25536-32d4-4271-a42a-89e3e20184e1" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756076536260694" start="0.0024999" length="120.29">../../../../setup_180226/Session-2026-02-18--11-03-06/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--11-03-06/Session-2026-02-18--11-03-06.imsession</SessionFile>
+        <LabelFile modified="5250756076531704566">../../../../setup_180226/Session-2026-02-18--11-03-06/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="1" length="83.2158101">empty_box</Label>
+          <Label count="1" length="119.8354752">table</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="mixed1" sessionId="5c201077-6022-4d62-abc3-70928eeb7b00" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Radar Data" tags="None">
-        <DataFile shape="[1,65,1]" samplerate="200" modified="5250751884687987052" start="0.0024999" length="117.11500000000001">../Radar_data_livecollection/setup_13_02/mixed1/Radar-Data.data</DataFile>
-        <SessionFile>../Radar_data_livecollection/setup_13_02/mixed1/mixed1.imsession</SessionFile>
-        <LabelFile modified="5250751884685323948">../Radar_data_livecollection/setup_13_02/mixed1/Live-Labeling.label</LabelFile>
+      <Session name="Session-2026-02-18--11-06-05" sessionId="faa3e839-52ff-49e9-930f-25bdc20e3b56" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756078207630432" start="0.0024999" length="120.665">../../../../setup_180226/Session-2026-02-18--11-06-05/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--11-06-05/Session-2026-02-18--11-06-05.imsession</SessionFile>
+        <LabelFile modified="5250756117305085870">../../../../setup_180226/Session-2026-02-18--11-06-05/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="3" length="58.9192504">table</Label>
-          <Label count="2" length="51.5969213">empty_box</Label>
+          <Label count="1" length="120.3556032">table</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="mixed2" sessionId="ba881c98-1a67-41dc-8848-3c6d79fc7f20" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Radar Data" tags="None">
-        <DataFile shape="[1,65,1]" samplerate="200" modified="5250751884698039876" start="0.0024999" length="146.395">../Radar_data_livecollection/setup_13_02/mixed2/Radar-Data.data</DataFile>
-        <SessionFile>../Radar_data_livecollection/setup_13_02/mixed2/mixed2.imsession</SessionFile>
-        <LabelFile modified="5250751884694777736">../Radar_data_livecollection/setup_13_02/mixed2/Live-Labeling.label</LabelFile>
+      <Session name="Session-2026-02-18--11-10-01" sessionId="d9063909-e8e8-4e88-bcac-83c59249a2f4" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756080580779496" start="0.0024999" length="103.675">../../../../setup_180226/Session-2026-02-18--11-10-01/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--11-10-01/Session-2026-02-18--11-10-01.imsession</SessionFile>
+        <LabelFile modified="5250756080576696217">../../../../setup_180226/Session-2026-02-18--11-10-01/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="3" length="58.4725869">empty_box</Label>
-          <Label count="3" length="37.5206496">table</Label>
+          <Label count="1" length="103.37904">table</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="table1" sessionId="0955d060-683d-42d4-86f3-98c1e1c9cde7" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Radar Data" tags="None">
-        <DataFile shape="[1,65,1]" samplerate="200" modified="5250751884741548906" start="0.0024999" length="90.715">../Radar_data_livecollection/setup_13_02/table1/Radar-Data.data</DataFile>
-        <SessionFile>../Radar_data_livecollection/setup_13_02/table1/table1.imsession</SessionFile>
-        <LabelFile modified="5250751884739316721">../Radar_data_livecollection/setup_13_02/table1/Live-Labeling.label</LabelFile>
+      <Session name="Session-2026-02-18--11-16-14" sessionId="9700269e-a8c7-421b-9541-d4cd376c988d" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756084368535590" start="0.0024999" length="121.435">../../../../setup_180226/Session-2026-02-18--11-16-14/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--11-16-14/Session-2026-02-18--11-16-14.imsession</SessionFile>
+        <LabelFile modified="5250756084364101194">../../../../setup_180226/Session-2026-02-18--11-16-14/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="1" length="85.8540983">table</Label>
+          <Label count="1" length="120.9905664">mpty_box</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="emptybox3" sessionId="d90cc279-07d2-40a3-b8ce-db7093a54350" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Radar Data" tags="None">
-        <DataFile shape="[1,65,1]" samplerate="200" modified="5250751884678979279" start="0.0024999" length="94.555">../Radar_data_livecollection/setup_13_02/emptybox3/Radar-Data.data</DataFile>
-        <SessionFile>../Radar_data_livecollection/setup_13_02/emptybox3/emptybox3.imsession</SessionFile>
-        <LabelFile modified="5250751884676913811">../Radar_data_livecollection/setup_13_02/emptybox3/Live-Labeling.label</LabelFile>
+      <Session name="Session-2026-02-18--11-19-28" sessionId="19af0732-fce3-4e58-8fec-771aefacd4b5" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756086211294291" start="0.0024999" length="119.995">../../../../setup_180226/Session-2026-02-18--11-19-28/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--11-19-28/Session-2026-02-18--11-19-28.imsession</SessionFile>
+        <LabelFile modified="5250756086206869179">../../../../setup_180226/Session-2026-02-18--11-19-28/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="1" length="78.1590317">empty_box</Label>
+          <Label count="1" length="119.6268096">mpty_box</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-18--11-22-15" sessionId="ce1bf4ec-11c0-4504-9170-0df54e5384aa" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756087974344554" start="0.0024999" length="120.47500000000001">../../../../setup_180226/Session-2026-02-18--11-22-15/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--11-22-15/Session-2026-02-18--11-22-15.imsession</SessionFile>
+        <LabelFile modified="5250756087969608219">../../../../setup_180226/Session-2026-02-18--11-22-15/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="120.1710144">mpty_box</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-18--11-57-57" sessionId="e1f1b626-c68f-4339-a8c6-e407a680592b" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756109350823385" start="0.0024999" length="120.47500000000001">../../../../setup_180226/Session-2026-02-18--11-57-57/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--11-57-57/Session-2026-02-18--11-57-57.imsession</SessionFile>
+        <LabelFile modified="5250756174989630201">../../../../setup_180226/Session-2026-02-18--11-57-57/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="39.8115264">table</Label>
+          <Label count="1" length="35.27">mpty_box</Label>
+          <Label count="1" length="35.7147078">noise</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-18--10-52-05" sessionId="9f6feec8-e169-48b3-8888-f9488c3cba6d" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756069957163359" start="0.0024999" length="120.47500000000001">../../../../setup_180226/Session-2026-02-18--10-52-05/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--10-52-05/Session-2026-02-18--10-52-05.imsession</SessionFile>
+        <LabelFile modified="5250756069951764284">../../../../setup_180226/Session-2026-02-18--10-52-05/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="120.239232">table</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-18--09-35-31" sessionId="b0d0ad4d-4094-4896-8a82-94bb2fac77b8" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756023898223996" start="0.0024999" length="127.675">../../../../setup_180226/Session-2026-02-18--09-35-31/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--09-35-31/Session-2026-02-18--09-35-31.imsession</SessionFile>
+        <LabelFile modified="5250756023892935266">../../../../setup_180226/Session-2026-02-18--09-35-31/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="127.646296">table</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-18--09-23-57" sessionId="7f4597fc-c1f5-4b2e-9a60-6d872dbb9415" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756017033053630" start="0.0024999" length="135.355">../../../../setup_180226/Session-2026-02-18--09-23-57/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--09-23-57/Session-2026-02-18--09-23-57.imsession</SessionFile>
+        <LabelFile modified="5250756017027721774">../../../../setup_180226/Session-2026-02-18--09-23-57/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="135.2831848">mpty_box</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
     </DataSet>
     <DataSet id="validation" targetSize="0.2" labels="Complete">
-      <Session name="mixed7" sessionId="d4a42b15-c0f1-4bd8-be3d-0e4889555ac3" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
-        <DataFile shape="[1,65,1]" samplerate="200" modified="5250751884716026003" start="0.0024999" length="300.475">../Radar_data_livecollection/setup_13_02/mixed7/Frobenius-norm-Data.data</DataFile>
-        <SessionFile>../Radar_data_livecollection/setup_13_02/mixed7/mixed7.imsession</SessionFile>
-        <LabelFile modified="5250751884716092161">../Radar_data_livecollection/setup_13_02/mixed7/Live-Labeling.label</LabelFile>
+      <Session name="Session-2026-02-18--09-57-47_mixed" sessionId="4269c2fd-4567-48e2-8370-7474c52e61f3" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756037507087134" start="0.0024999" length="241.915">../../../../setup_180226/Session-2026-02-18--09-57-47_mixed/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--09-57-47_mixed/Session-2026-02-18--09-57-47_mixed.imsession</SessionFile>
+        <LabelFile modified="5250756166968661133">../../../../setup_180226/Session-2026-02-18--09-57-47_mixed/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="1" length="103.2370276">table</Label>
-          <Label count="1" length="156.2672137">empty_box</Label>
+          <Label count="1" length="105.7555588">table</Label>
+          <Label count="1" length="59.9197745">noise</Label>
+          <Label count="1" length="62.4470671">mpty_box</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="mixed8" sessionId="e1bfadd1-5190-4d05-ad1f-3602d9682551" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
-        <DataFile shape="[1,65,1]" samplerate="200" modified="5250751884721985566" start="0.0024999" length="300.475">../Radar_data_livecollection/setup_13_02/mixed8/Frobenius-norm-Data.data</DataFile>
-        <SessionFile>../Radar_data_livecollection/setup_13_02/mixed8/mixed8.imsession</SessionFile>
-        <LabelFile modified="5250751884722033735">../Radar_data_livecollection/setup_13_02/mixed8/Live-Labeling.label</LabelFile>
+      <Session name="Session-2026-02-18--10-07-24_mixed" sessionId="a9f7e7b0-d0e0-483e-be6a-f7e4d78f339b" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756043054619652" start="0.0024999" length="261.115">../../../../setup_180226/Session-2026-02-18--10-07-24_mixed/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--10-07-24_mixed/Session-2026-02-18--10-07-24_mixed.imsession</SessionFile>
+        <LabelFile modified="5250756167300421245">../../../../setup_180226/Session-2026-02-18--10-07-24_mixed/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="1" length="67.5356432">table</Label>
-          <Label count="2" length="181.9826832">empty_box</Label>
+          <Label count="1" length="70.2151474">noise</Label>
+          <Label count="1" length="109.535">table</Label>
+          <Label count="1" length="56.9519105">mpty_box</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="Session-2026-02-15--10-58-18" sessionId="40ff736e-9a6b-4c71-9f8e-66ba90aba2c5" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
-        <DataFile shape="[1,65,1]" samplerate="200" modified="5250753481513708738" start="0.0024999" length="122.395">../Radar_data_livecollection/setup_150226/Session-2026-02-15--10-58-18/Frobenius-norm-Data.data</DataFile>
-        <SessionFile>../Radar_data_livecollection/setup_150226/Session-2026-02-15--10-58-18/Session-2026-02-15--10-58-18.imsession</SessionFile>
-        <LabelFile modified="5250753490294857857">../Radar_data_livecollection/setup_150226/Session-2026-02-15--10-58-18/Live-Labeling.label</LabelFile>
+      <Session name="Session-2026-02-18--09-28-48" sessionId="ff98e9b8-10f0-49be-b663-a908d75db327" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756019909182974" start="0.0024999" length="142.555">../../../../setup_180226/Session-2026-02-18--09-28-48/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--09-28-48/Session-2026-02-18--09-28-48.imsession</SessionFile>
+        <LabelFile modified="5250756019903473120">../../../../setup_180226/Session-2026-02-18--09-28-48/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="11" length="104.8272419">empty_box</Label>
+          <Label count="1" length="142.5041344">table</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-18--09-32-16" sessionId="d78633e8-141b-49c7-a82b-96ed7f3ef179" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756021911675476" start="0.0024999" length="125.75500000000001">../../../../setup_180226/Session-2026-02-18--09-32-16/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--09-32-16/Session-2026-02-18--09-32-16.imsession</SessionFile>
+        <LabelFile modified="5250756021906661254">../../../../setup_180226/Session-2026-02-18--09-32-16/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="125.3870672">mpty_box</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-18--10-31-02_unlabled" sessionId="bd3bdcd0-6bb1-48ed-b034-4f3e2e903aab" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756057243105876" start="0.0024999" length="121.435">../../../../setup_180226/Session-2026-02-18--10-31-02_unlabled/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--10-31-02_unlabled/Session-2026-02-18--10-31-02_unlabled.imsession</SessionFile>
+        <LabelFile modified="5250756168820480138">../../../../setup_180226/Session-2026-02-18--10-31-02_unlabled/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="111.254278">noise</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-18--10-40-26_unlabeld" sessionId="4b9db198-31b1-4410-bdbb-5de52b21345e" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756062914883134" start="0.0024999" length="126.235">../../../../setup_180226/Session-2026-02-18--10-40-26_unlabeld/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--10-40-26_unlabeld/Session-2026-02-18--10-40-26_unlabeld.imsession</SessionFile>
+        <LabelFile modified="5250756169174270783">../../../../setup_180226/Session-2026-02-18--10-40-26_unlabeld/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="40.5458592">mpty_box</Label>
+          <Label count="1" length="47.5572792">noise</Label>
+          <Label count="1" length="28.4578975">table</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
@@ -646,36 +732,95 @@
       </Session>
     </DataSet>
     <DataSet id="test" targetSize="0.2" labels="Complete">
-      <Session name="mixed9" sessionId="87499a44-9e3c-43ab-820a-f4b37826db23" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="False" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
-        <DataFile shape="[1,65,1]" samplerate="200" modified="5250751884727527457" start="0.0024999" length="300.475">../Radar_data_livecollection/setup_13_02/mixed9/Frobenius-norm-Data.data</DataFile>
-        <SessionFile>../Radar_data_livecollection/setup_13_02/mixed9/mixed9.imsession</SessionFile>
-        <LabelFile modified="5250751884727527457">../Radar_data_livecollection/setup_13_02/mixed9/Live-Labeling.label</LabelFile>
+      <Session name="Session-2026-02-18--11-27-23" sessionId="014ed1f6-db5d-42fb-bace-b39720b7a63e" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756091010689137" start="0.0024999" length="119.995">../../../../setup_180226/Session-2026-02-18--11-27-23/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--11-27-23/Session-2026-02-18--11-27-23.imsession</SessionFile>
+        <LabelFile modified="5250756091006324604">../../../../setup_180226/Session-2026-02-18--11-27-23/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="2" length="93.8704952">table</Label>
-          <Label count="1" length="94.7019696">empty_box</Label>
+          <Label count="1" length="119.759232">mpty_box</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="mixed11" sessionId="50d02f8f-e234-4ae9-a067-fc059240c79c" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
-        <DataFile shape="[1,65,1]" samplerate="200" modified="5250751884664895262" start="0.0024999" length="300.475">../Radar_data_livecollection/mixed11/Frobenius-norm-Data.data</DataFile>
-        <SessionFile>../Radar_data_livecollection/mixed11/mixed11.imsession</SessionFile>
-        <LabelFile modified="5250751884664915457">../Radar_data_livecollection/mixed11/Live-Labeling.label</LabelFile>
+      <Session name="Session-2026-02-18--11-36-11" sessionId="4aeef428-41f4-4c39-9ac9-8ffb373be456" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756096493459998" start="0.0024999" length="120.47500000000001">../../../../setup_180226/Session-2026-02-18--11-36-11/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--11-36-11/Session-2026-02-18--11-36-11.imsession</SessionFile>
+        <LabelFile modified="5250756170359525747">../../../../setup_180226/Session-2026-02-18--11-36-11/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="1" length="80.7194181">table</Label>
-          <Label count="2" length="114.5038687">empty_box</Label>
+          <Label count="1" length="40.5136928">mpty_box</Label>
+          <Label count="1" length="34.3995003">noise</Label>
+          <Label count="1" length="39.6664624">table</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
-      <Session name="Session-2026-02-15--11-19-28" sessionId="0da6512e-170b-419a-a91b-714afda798da" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
-        <DataFile shape="[1,65,1]" samplerate="200" modified="5250753494199548620" start="0.0024999" length="123.83500000000001">../Radar_data_livecollection/setup_150226/Session-2026-02-15--11-19-28/Frobenius-norm-Data.data</DataFile>
-        <SessionFile>../Radar_data_livecollection/setup_150226/Session-2026-02-15--11-19-28/Session-2026-02-15--11-19-28.imsession</SessionFile>
-        <LabelFile modified="5250753494196983096">../Radar_data_livecollection/setup_150226/Session-2026-02-15--11-19-28/Live-Labeling.label</LabelFile>
+      <Session name="Session-2026-02-18--11-39-04" sessionId="51a49108-97c3-425f-874b-e15dfc8be137" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756098017070142" start="0.0024999" length="120.47500000000001">../../../../setup_180226/Session-2026-02-18--11-39-04/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--11-39-04/Session-2026-02-18--11-39-04.imsession</SessionFile>
+        <LabelFile modified="5250756170658722188">../../../../setup_180226/Session-2026-02-18--11-39-04/Live-Labeling.label</LabelFile>
         <Labels>
-          <Label count="7" length="97.945966">empty_box</Label>
-          <Label count="1" length="6.4549999">table</Label>
+          <Label count="1" length="38.8554752">table</Label>
+          <Label count="1" length="37.3">mpty_box</Label>
+          <Label count="1" length="35.4170894">noise</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-18--11-42-33" sessionId="0631bea5-07bb-43c9-b547-dc1f4a130bbf" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756100070583909" start="0.0024999" length="122.395">../../../../setup_180226/Session-2026-02-18--11-42-33/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--11-42-33/Session-2026-02-18--11-42-33.imsession</SessionFile>
+        <LabelFile modified="5250756170885821054">../../../../setup_180226/Session-2026-02-18--11-42-33/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="42.969616">table</Label>
+          <Label count="1" length="33.82">mpty_box</Label>
+          <Label count="1" length="36.7247956">noise</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-18--11-45-22" sessionId="76163750-3fd1-4eec-a2f4-dc3a04fb939c" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756101777222422" start="0.0024999" length="120.955">../../../../setup_180226/Session-2026-02-18--11-45-22/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--11-45-22/Session-2026-02-18--11-45-22.imsession</SessionFile>
+        <LabelFile modified="5250756171131211202">../../../../setup_180226/Session-2026-02-18--11-45-22/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="42.7967183">mpty_box</Label>
+          <Label count="1" length="33.8595455">noise</Label>
+          <Label count="1" length="36.8664623">table</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-18--11-49-04" sessionId="dbb7e6cc-6e04-4f95-a981-5e234104419d" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756103975486374" start="0.0024999" length="121.915">../../../../setup_180226/Session-2026-02-18--11-49-04/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--11-49-04/Session-2026-02-18--11-49-04.imsession</SessionFile>
+        <LabelFile modified="5250756171416417530">../../../../setup_180226/Session-2026-02-18--11-49-04/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="41.7875776">table</Label>
+          <Label count="1" length="32.39">mpty_box</Label>
+          <Label count="1" length="37.5151448">noise</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-18--11-52-04" sessionId="09fe33cd-7f5a-41bb-a1b3-964b6d5de60b" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756105920283318" start="0.0024999" length="122.875">../../../../setup_180226/Session-2026-02-18--11-52-04/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--11-52-04/Session-2026-02-18--11-52-04.imsession</SessionFile>
+        <LabelFile modified="5250756171690524844">../../../../setup_180226/Session-2026-02-18--11-52-04/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="39.7273856">table</Label>
+          <Label count="1" length="35.98">mpty_box</Label>
+          <Label count="1" length="37.3120711">noise</Label>
+        </Labels>
+        <CustomColumnValues />
+      </Session>
+      <Session name="Session-2026-02-18--11-55-26" sessionId="cd4c9039-7c7a-47b6-b27a-0f40a20c4907" originalSessionId="00000000-0000-0000-0000-000000000000" ownerLocked="True" labelTrack="Live Labeling" dataTrack="Frobenius norm Data" tags="None">
+        <DataFile shape="[1,65,1]" samplerate="200" modified="5250756107811386143" start="0.0024999" length="120.47500000000001">../../../../setup_180226/Session-2026-02-18--11-55-26/Frobenius-norm-Data.data</DataFile>
+        <SessionFile>../../../../setup_180226/Session-2026-02-18--11-55-26/Session-2026-02-18--11-55-26.imsession</SessionFile>
+        <LabelFile modified="5250756172375703871">../../../../setup_180226/Session-2026-02-18--11-55-26/Live-Labeling.label</LabelFile>
+        <Labels>
+          <Label count="1" length="39.8635648">table</Label>
+          <Label count="1" length="34.718845">mpty_box</Label>
+          <Label count="1" length="34.1494388">noise</Label>
         </Labels>
         <CustomColumnValues />
       </Session>
     </DataSet>
   </Database>
+  <PredefinedLabels>
+    <Label>noise</Label>
+  </PredefinedLabels>
 </ImagimobStudio>

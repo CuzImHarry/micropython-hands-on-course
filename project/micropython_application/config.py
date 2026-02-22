@@ -1,8 +1,5 @@
 # ============================================================
-# Edge AI Inventory — Device Configuration
-# ============================================================
-# Copy this file and update values for your environment.
-# This file is imported by all other modules.
+# Edge AI Inventory — Device Configuration (AUTO-GENERATED)
 # ============================================================
 
 # ---- Wi-Fi ----
@@ -11,17 +8,16 @@ WIFI_PASS = "Nordkap2022!"
 WIFI_TIMEOUT = 15  # seconds to wait for connection
 
 # ---- Server ----
-SERVER_HOST = "192.168.1.100"  # IP of the machine running Flask
+SERVER_HOST = "192.168.0.129"
 SERVER_PORT = 5000
 API_BASE = "http://{}:{}".format(SERVER_HOST, SERVER_PORT)
 
 # ---- Device Identity ----
-# These are obtained after registering via POST /api/devices
-DEVICE_ID = 1
-API_KEY = "your-64-char-hex-api-key"
+DEVICE_ID = 4
+API_KEY = "your Api-key"
 
 # ---- Detection Loop ----
-DETECTION_INTERVAL = 10  # seconds between inference cycles
+DETECTION_INTERVAL = 10
 
 # ---- Hardware (PSoC6) ----
-LED_PIN = "P13_7"  # Onboard LED for status indication
+LED_PIN = "P13_7"
